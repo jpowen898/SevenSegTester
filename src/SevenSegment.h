@@ -1,12 +1,13 @@
 #ifndef SEVENSEGMENT_H
 #define SEVENSEGMENT_H
-//#include <ShiftOut.h>
-#include <ShiftReg.h>
+#include <mbed.h>
+
+#define REGISTER_CNT 1 
 
 class SevenSegment
 {
     private:
-    int segment [33][8] =  {{1,1,1,1,1,1,0,0}, //#0  //{A,B,C,D,E,F,G,dec}
+    char segment [33][8] =  {{1,1,1,1,1,1,0,0}, //#0  //{A,B,C,D,E,F,G,dec}
                             {0,1,1,0,0,0,0,0}, //#1
                             {1,1,0,1,1,0,1,0}, //#2
                             {1,1,1,1,0,0,1,0}, //#3
@@ -39,9 +40,9 @@ class SevenSegment
                             {1,0,0,1,1,1,1,1}, //#E.
                             {1,0,0,0,1,1,1,1}, //#F.
                             {0,0,0,0,0,0,0,1}};
-    ShiftReg* reg;
+    DigitalOut DSERIAL, RCLK, SRCLK; 
     public:
-    SevenSegment(PinName ser, PinName clk);
+    SevenSegment(PinName ser, PinName srclk, PinName rclk);
     ~SevenSegment();
     void displayOneNum(const int num);
     bool displayFourNums(const int num);
@@ -49,5 +50,10 @@ class SevenSegment
     bool clear();
     void on();
     void off();
+
+    void updateRegister();
+    void updateOutput();
+    void writeBit(unsigned char bit);
+    void writeArray(char arr[8*REGISTER_CNT]);
 };
 #endif
