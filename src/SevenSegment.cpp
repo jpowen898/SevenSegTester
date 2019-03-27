@@ -11,22 +11,46 @@ void SevenSegment::displayOneNum(const int num){
 }
 
 bool SevenSegment::displayFourNums(const int num){
-    int digi1 = 0;
-    int digi2 = 0;
-    int digi3 = 0;
-    int digi4 = 0;
-    digi4 = (num < 1000) ? BLANK : (num/1000);
-    //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
-    digi3 = (num < 100) ? BLANK : (num%1000)/100;
-    //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
-    digi2 = (num < 100) ? BLANK : (num%100)/10;
-    digi1 = num%10;
-    displayOneNum(digi1);
-    displayOneNum(digi2);
-    writeBit2(digi3);
-    displayOneNum(digi4);
-    return true;
+    if(num>0){
+        int digi1 = 0;
+        int digi2 = 0;
+        int digi3 = 0;
+        int digi4 = 0;
+        digi4 = (num < 1000) ? BLANK : (num/1000);
+        //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
+        digi3 = (num < 100) ? BLANK : (num%1000)/100;
+        //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
+        digi2 = (num < 100) ? BLANK : (num%100)/10;
+        digi1 = num%10;
+        displayOneNum(digi1);
+        displayOneNum(digi2);
+        writeBit2(digi3);           // <-change to "displayOneNum" for fixed design
+        displayOneNum(digi4);
+        return true;
+    }
+    else if(num > -1000) {
+        int digi1 = 0;
+        int digi2 = 0;
+        int digi3 = 0;
+        int digi4 = 0;
+        digi4 = NEG;
+        //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
+        digi3 = (num < 100) ? BLANK : (-num%1000)/100;
+        //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
+        digi2 = (num < 100) ? BLANK : (-num%100)/10;
+        digi1 = -num%10;
+        displayOneNum(digi1);
+        displayOneNum(digi2);
+        writeBit2(digi3);           // <-change to "displayOneNum" for fixed design
+        displayOneNum(digi4);
+        return true;
+    }
+    else{
+        return false;
+    }
 }
+
+
 
 
 bool SevenSegment::writeBit2(const int num){
