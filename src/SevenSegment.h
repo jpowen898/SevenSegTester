@@ -7,7 +7,7 @@
 class SevenSegment
 {
     private:
-    char segment [33][8] =  {{1,1,1,1,1,1,0,0}, //#0  //{A,B,C,D,E,F,G,dec}
+    char segment [34][8] =  {{1,1,1,1,1,1,0,0}, //#0  //{A,B,C,D,E,F,G,dec}
                             {0,1,1,0,0,0,0,0},  //#1
                             {1,1,0,1,1,0,1,0},  //#2
                             {1,1,1,1,0,0,1,0},  //#3
@@ -39,8 +39,10 @@ class SevenSegment
                             {0,1,1,1,1,0,1,1},  //#d.
                             {1,0,0,1,1,1,1,1},  //#E.
                             {1,0,0,0,1,1,1,1},  //#F.
-                            {0,0,0,0,0,0,0,1}};
+                            {0,0,0,0,0,0,0,1},
+                            {0,0,0,0,0,0,0,0}}; //Blank
     DigitalOut DSERIAL, RCLK, SRCLK; 
+    const int BLANK = 34;
     public:
     SevenSegment(PinName ser, PinName srclk, PinName rclk);
     ~SevenSegment();
@@ -48,6 +50,7 @@ class SevenSegment
     bool displayFourNums(const int num);
     bool displayTwoNums(const int num);
     bool clear();
+    bool writeBit2(const int num);
     void on();
     void off();
 

@@ -15,19 +15,27 @@ bool SevenSegment::displayFourNums(const int num){
     int digi2 = 0;
     int digi3 = 0;
     int digi4 = 0;
-    digi4 = num/1000;
-    digi3 = num/100;
-    digi2 = num/10;
-    digi1 = num - (digi1*1000 + digi2*100 + digi3*10);
+    digi4 = (num < 1000) ? BLANK : (num/1000);
+    //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
+    digi3 = (num < 100) ? BLANK : (num%1000)/100;
+    //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
+    digi2 = (num < 100) ? BLANK : (num%100)/10;
+    digi1 = num%10;
     displayOneNum(digi1);
-    writeBit(0);
     displayOneNum(digi2);
-    writeBit(0);
-    displayOneNum(digi3);
-    writeBit(0);
+    writeBit2(digi3);
     displayOneNum(digi4);
     return true;
 }
+
+
+bool SevenSegment::writeBit2(const int num){
+    char convert[8] = {segment[num][0], segment[num][1], segment[num][6], segment[num][3], 
+    segment[num][4], segment[num][5], segment[num][2], segment[num][7]};
+    writeArray(convert);
+    return true;
+}
+
 
 bool SevenSegment::displayTwoNums(const int num){
     int digi1 = 0;
@@ -37,7 +45,6 @@ bool SevenSegment::displayTwoNums(const int num){
     }
     digi1 = num - (digi2*10);
     displayOneNum(digi1);
-    writeBit(0);
     displayOneNum(digi2);
     return true;
 }
@@ -59,13 +66,13 @@ void SevenSegment::off(){
 //Pulses the register
 void SevenSegment::updateRegister(){
     SRCLK = 1;
-    wait_us(.01);
+    //wait_us(.000001);
     SRCLK = 0;    
 }
 //Updates the output register
 void SevenSegment::updateOutput(){
     RCLK = 1;
-    wait_us(.01);
+    //wait_us(.000001);
     RCLK = 0;    
 }
 //Writes a bit to the shift register
