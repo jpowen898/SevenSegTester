@@ -5,13 +5,20 @@ SevenSegment::SevenSegment(PinName ser, PinName srclk, PinName rclk) : DSERIAL(s
 
 SevenSegment::~SevenSegment(){}
 
+bool SevenSegment::displayInt(const int num){
+    return displayFourNums(num);
+}
+bool SevenSegment::displayDecimal(const float num){
+    return false;                           // <-------- add code for this
+}
+
 void SevenSegment::displayOneNum(const int num){
     writeArray(segment[num]);
     return;
 }
 
 bool SevenSegment::displayFourNums(const int num){
-    if(num>0){
+    if(num >= 0){
         int digi1 = 0;
         int digi2 = 0;
         int digi3 = 0;
@@ -20,7 +27,7 @@ bool SevenSegment::displayFourNums(const int num){
         //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
         digi3 = (num < 100) ? BLANK : (num%1000)/100;
         //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
-        digi2 = (num < 100) ? BLANK : (num%100)/10;
+        digi2 = (num < 10) ? BLANK : (num%100)/10;
         digi1 = num%10;
         displayOneNum(digi1);
         displayOneNum(digi2);
@@ -28,20 +35,16 @@ bool SevenSegment::displayFourNums(const int num){
         displayOneNum(digi4);
         return true;
     }
-    else if(num > -1000) {
-        int digi1 = 0;
-        int digi2 = 0;
-        int digi3 = 0;
-        int digi4 = 0;
-        digi4 = NEG;
+    else if(num < 0 && num > (-1000)) {
+        int digi1 = (num%10);
+        int digi2 = (num > -10) ? NEG : (num > -10) ? BLANK : (num%100)/10;
+        int digi3 = (num > -100 && digi2 != NEG) ? NEG : (num > -100) ? BLANK : (num%1000)/100;
+        int digi4 = (num > -1000 && digi3 != NEG && digi2 != NEG) ? NEG : BLANK;
         //digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
-        digi3 = (num < 100) ? BLANK : (-num%1000)/100;
         //digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
-        digi2 = (num < 100) ? BLANK : (-num%100)/10;
-        digi1 = -num%10;
-        displayOneNum(digi1);
-        displayOneNum(digi2);
-        writeBit2(digi3);           // <-change to "displayOneNum" for fixed design
+        displayOneNum(abs(digi1));
+        displayOneNum(abs(digi2));
+        writeBit2(abs(digi3));           // <-change to "displayOneNum" for fixed design
         displayOneNum(digi4);
         return true;
     }

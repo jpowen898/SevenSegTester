@@ -16,17 +16,9 @@ int main() {
     const int BLANK = 34;*/
     while(1) {
         led = 0;
-        for (int num = 0; num < 9999; num=num+10){
+        test.clear();
+        for (int num = -220; num <= 9999; num++){
             wait(.05);
-                /*digi4 = (num < 1000) ? BLANK : (num/1000);
-                digi3 = (num < 100) ? BLANK : ((num-(num/1000)*1000)/100);
-                digi2 = (num < 10) ? BLANK : (num-(((num-(num/1000)*1000)/100)*100-(num/1000)*1000))/10;
-                digi1 = num%10;
-            ser.printf("i = %d\r\n   1's = %d\r\n  10's = %d \r\n 100's = %d\r\n1000's = %d\r\n", num, digi1, digi2, digi3, digi4);
-            test.displayOneNum(digi1);
-            test.displayOneNum(digi2);
-            test.writeBit2(digi3);
-            test.displayOneNum(digi4);*/
             test.displayFourNums(num);
             led = 1 ^ led;
         }
