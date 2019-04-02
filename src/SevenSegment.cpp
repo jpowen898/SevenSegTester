@@ -93,13 +93,13 @@ void SevenSegment::off(){
 //Pulses the register
 void SevenSegment::updateRegister(){
     SRCLK = 1;
-    //wait_us(.000001);
+    wait_us(.1);
     SRCLK = 0;    
 }
 //Updates the output register
 void SevenSegment::updateOutput(){
     RCLK = 1;
-    //wait_us(.000001);
+    wait_us(.1);
     RCLK = 0;    
 }
 //Writes a bit to the shift register

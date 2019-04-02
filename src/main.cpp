@@ -1,14 +1,14 @@
 #include <mbed.h>
 
-#include "ShiftReg.h"
-#include "ShiftOut.h"
+//#include "ShiftReg.h"
+//#include "ShiftOut.h"
 #include "SevenSegment.h"
 
 int main() {
-    DigitalOut led(D6);
-    Serial ser(USBTX, USBRX);
-    SevenSegment test(D11, D12, D13);
-    //SevenSegment test(P0_28, P0_8, P0_9);
+    DigitalOut led(P0_16);
+    //Serial ser(USBTX, USBRX);
+    //SevenSegment test(P0_28, P0_11, P0_10);
+    SevenSegment test(P0_28, P0_11, P0_10);
     /*int digi1 = 0;
     int digi2 = 0;
     int digi3 = 0;
